@@ -1,24 +1,62 @@
-import logo from './logo.svg';
+
 import './App.css';
+import Home from './components/Home';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Reg from './components/Reg';
+import {BrowserRouter as Router,Route,Switch }from 'react-router-dom'
+import Login from './components/Login';
+import Search from './components/Search';
+import HomeOwner from './components/owner/HomeOwner';
+
+import { useState } from 'react';
+import AddBus from './components/owner/AddBus';
+import OwnerTableData from './components/owner/OwnerTableData';
 
 function App() {
+
+  const [loginobj, setloginobj] = useState({
+    userName:'',
+    password:''
+  })
   return (
+
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {/* <Reg/> */}
+ 
+          {/* <Router>
+          <Route path="/reg" component={Reg}></Route>
+          <Route path="/login" component={Login}></Route>
+          <Route path="/home" component={Home}></Route>
+  
+  </Router> */}
+
+<Router>
+      <Home/>
+  
+      <Switch>
+      <Route path="/reg" component={Reg}></Route>
+      <Route
+          path={"/login"}
+          render={(props) => {
+            return (
+              <Login
+                loginObj={loginobj}
+                setLoginObj={setloginobj}
+                {...props}
+              />
+            );
+          }}
+        />
+          <Route path="/search" component={Search}></Route>
+          <Route path="/homeowner" component={HomeOwner}></Route>
+          <Route path="/ownertabledata" component={OwnerTableData}></Route>
+         
+          <Route path="/addbus" component={AddBus}></Route>
+      </Switch>
+    
+    </Router>
     </div>
+   
   );
 }
 
