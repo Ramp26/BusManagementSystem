@@ -11,6 +11,8 @@ import HomeOwner from './components/owner/HomeOwner';
 import { useState } from 'react';
 import AddBus from './components/owner/AddBus';
 import OwnerTableData from './components/owner/OwnerTableData';
+import EditBus from './components/owner/EditBus';
+
 
 function App() {
 
@@ -52,6 +54,7 @@ function App() {
           <Route path="/ownertabledata" component={OwnerTableData}></Route>
          
           <Route path="/addbus" component={AddBus}></Route>
+          <Route path="/editbus" component={EditBus}/>
       </Switch>
     
     </Router>

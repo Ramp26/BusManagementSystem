@@ -2,12 +2,16 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 // import { Route } from 'react-router-dom';
 import AddBus from './AddBus';
+// import EditBus from './EditBus';
 
 function OwnerTableData() {
 
     const [busdata, setbusdata] = useState();
 
     const [showAdd, setshowAdd] = useState(false);
+    // const [showedit, setshowedit] = useState(false);
+
+    // const [selected, setselected] = useState();
     
     useEffect( () => {
        first();
@@ -38,11 +42,16 @@ function OwnerTableData() {
       console.log("busdata",busdata);
     }
     
-    // let showAddModal = () => {
-    //   setshowAdd(false);
-    //   // props.history.push("/addbus");
-    // };
+    let showAddModal = () => {
+      setshowAdd(false);
+   
+    };
 
+
+  //   let updateData=(val)=>{
+  //     setshowedit(true);
+  //  setselected(val);
+  //   }
     
   return (
 
@@ -126,10 +135,11 @@ function OwnerTableData() {
 </table>
 
 <AddBus showAdd={showAdd} setshowAdd={setshowAdd} />
+{/* <EditBus  showedit={showedit} setshowedit={setshowedit} selected={selected}/> */}
 
     </div>
     
-  )
+  );
 }
 
 export default OwnerTableData;
