@@ -1,4 +1,5 @@
 
+import axios from 'axios';
 import React, { useState } from 'react'
 
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap'
@@ -19,6 +20,11 @@ function AddBus(props) {
   
   });
   
+const toggle= props.showAdd
+const settoggle=props.setshowAdd
+
+
+
   let addnew=(e)=>{
     setbusdata({
       ...busdata,
@@ -28,15 +34,67 @@ function AddBus(props) {
   }
 
 
+  const handleOpen=()=>{
+    settoggle(true)
+  }
+
+
+  const handleColse=()=>{
+    settoggle(false)
+  }
+
+
+
+
+const saveData=async()=>{
+try{
+  const token=localStorage.getItem("jwt");
+  console.log(token)
+
+  let token1=JSON.parse(token);
+
+  let jwtToken=`Bearer ${token1}`
+
+
+  let res = await axios.post(`http://localhost:8080/addbus/`,busdata,{headers:{'Authorization': jwtToken}});
+  if(res.data.error){
+      alert('something went wrong')
+  }else{
+      alert('inserted successfully')
+
+      handleColse();
+      setbusdata({
+          busName:"",
+          busFeature:"",
+          busFacility:"",
+          fromPlace:"",
+           toPlace:"",
+          charges:"",
+          distance:"",
+          userName:"",
+
+      })
+  }
+}catch(err){
+      console.log(err)
+
+  };
+
+
+
+
+}
+  
+
   return (
     <div>
        <Modal
-        show={props.showadd}
-        onHide={props.setshowadd}
+        show={toggle}
+        onHide={handleColse}
         backdrop="static"
         keyboard={false}
       >
-        <Modal.Header onClick={()=>{props.setshowAdd(false)}} closeButton>
+        <Modal.Header closeButton>
           <Modal.Title>Modal title</Modal.Title>
         </Modal.Header >
         <Modal.Body>
@@ -44,16 +102,16 @@ function AddBus(props) {
             <Row>
               <Col>
                 <Form.Control
-                  placeholder="Car Name"
-                  name="carName"
+                  placeholder="bus Name"
+                  name="busName"
                   value={busdata.busName}
                   onChange={addnew}
                 />
               </Col>
               <Col>
                 <Form.Control
-                  placeholder="Company Name?"
-                  name="companyName"
+                  placeholder="busFeature"
+                  name="busFeature"
                   value={busdata.busFeature}
                   onChange={addnew}
                 />
@@ -63,16 +121,16 @@ function AddBus(props) {
             <Row>
               <Col>
                 <Form.Control
-                  placeholder="Fuel Type"
-                  name="fuelType"
+                  placeholder="busFacility"
+                  name="busFacility"
                   value={busdata.busFacility}
                   onChange={addnew}
                 />
               </Col>
               <Col>
                 <Form.Control
-                  placeholder="Power Steering (TRUE or FALSE)"
-                  name="powerSteering"
+                  placeholder="fromPlace"
+                  name="fromPlace"
                   value={busdata.fromPlace}
                   onChange={addnew}
                 />
@@ -82,8 +140,8 @@ function AddBus(props) {
             <Row>
               <Col>
                 <Form.Control
-                  placeholder="Breake System"
-                  name="breakSystem"
+                  placeholder=" toPlace"
+                  name="toPlace"
                   value={busdata.toPlace}
                   onChange={addnew}
                 />
@@ -91,7 +149,7 @@ function AddBus(props) {
 
               <Col>
                 <Form.Control
-                  placeholder="Mileage"
+                  placeholder="distance"
                   name="distance"
                   value={busdata.distance}
                   onChange={addnew}
@@ -102,7 +160,7 @@ function AddBus(props) {
             <Row>
             <Col>
                 <Form.Control
-                  placeholder="GearType"
+                  placeholder="userName"
                   name="userName"
                   value={busdata.userName}
                   onChange={addnew}
@@ -126,10 +184,10 @@ function AddBus(props) {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={props.setshowadd}>
+          <Button variant="secondary" onClick={handleColse}>
             Close
           </Button>
-          <Button variant="primary">Understood</Button>
+          <Button variant="primary" onClick={()=>{saveData()}}>Submit</Button>
         </Modal.Footer>
       </Modal>
     </div>

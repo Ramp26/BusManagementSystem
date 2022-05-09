@@ -2,16 +2,16 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 // import { Route } from 'react-router-dom';
 import AddBus from './AddBus';
-// import EditBus from './EditBus';
+import EditBus from './EditBus';
 
 function OwnerTableData() {
 
     const [busdata, setbusdata] = useState();
 
     const [showAdd, setshowAdd] = useState(false);
-    // const [showedit, setshowedit] = useState(false);
+    const [showedit, setshowedit] = useState(false);
 
-    // const [selected, setselected] = useState();
+    const [selected, setselected] = useState();
     
     useEffect( () => {
        first();
@@ -48,10 +48,10 @@ function OwnerTableData() {
     };
 
 
-  //   let updateData=(val)=>{
-  //     setshowedit(true);
-  //  setselected(val);
-  //   }
+    let updateData=(val)=>{
+      setshowedit(true);
+      setselected(val);
+    }
     
   return (
 
@@ -109,7 +109,7 @@ function OwnerTableData() {
                       paddingLeft: "20px",
                     }}
                     variant="success"
-                    // onClick={()=>{updateData(val)}}
+                    onClick={()=>{updateData(val)}}
                   >
                     Edit
                   </button>
@@ -135,7 +135,7 @@ function OwnerTableData() {
 </table>
 
 <AddBus showAdd={showAdd} setshowAdd={setshowAdd} />
-{/* <EditBus  showedit={showedit} setshowedit={setshowedit} selected={selected}/> */}
+<EditBus  showedit={showedit} setshowedit={setshowedit} selected={selected}/>
 
     </div>
     

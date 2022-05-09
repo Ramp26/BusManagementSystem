@@ -1,23 +1,34 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
 
 function EditBus(props) {
 
-    const [busdata, setbusdata] = useState(
-        {
 
-         busName:"",
-         busFeature:"",
-         busFacility:"",
-         fromPlace:"",
-          toPlace:"",
-         charges:"",
-         distance:"",
-         userName:"",
-      
-      });
+  const toggle= props.showedit
+const settoggle=props.setshowedit
+    const [busdata, setbusdata] = useState({
+      busName:"",
+      busFeature:"",
+      busFacility:"",
+      fromPlace:"",
+       toPlace:"",
+      charges:"",
+      distance:"",
+      userName:"",
+
+  });
 
 
+      const handleOpen=()=>{
+        settoggle(true)
+      }
+    
+    
+      const handleColse=()=>{
+        settoggle(false)
+      }
+    
       useEffect(() => {
        
       setbusdata(props.selected);   
@@ -32,12 +43,13 @@ let update=(e)=>{
       })
 }
 
-
+console.log(busdata)
 let saveData=async()=>{
     try{
 
     let token=localStorage.getItem("jwt")
-    let jwtToken=`Bearer ${token}`
+    let token1=JSON.parse(token);
+    let jwtToken=`Bearer ${token1}`
 
 
     let res = await axios.put(`http://localhost:8080/edit/${busdata.busId}`,busdata,{headers:{'Authorization': jwtToken}});
@@ -70,60 +82,109 @@ let saveData=async()=>{
 
   return (
     <div>
-    <div className="modal fade" id="exampleModal"  tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true" show={props.showedit}   >
-      <div className="modal-dialog">
-        <div className="modal-content">
-          <div className="modal-header"  >
-            <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
-            <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={()=>{props.setshowedit(false)}}>
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div className="modal-body mb-3">
-<div className="row mb-3">
-    <div className="col">
-      <input type="text" className="form-control" placeholder="First name"  name='busName' value={busdata.busName}  onChange={update}/>
-    </div>
-    <div className="col">
-      <input type="text" className="form-control" placeholder="Last name" name='busFeature' value={busdata.busFeature} onChange={update} />
-    </div>
-  </div>
-  <div className="row mb-3">
-    <div className="col">
-      <input type="text" className="form-control" placeholder="First name" name='busFacility' value={busdata.busFacility} onChange={update} />
-    </div>
-    <div className="col">
-      <input type="text" className="form-control" placeholder="Last name" value={busdata.charges} name='charges' onChange={update} />
-    </div>
-  </div>
-  <div className="row mb-3">
-    <div className="col">
-      <input type="text" className="form-control" placeholder="First name" value={busdata.distance} name='distance' onChange={update} />
-    </div>
-    <div className="col">
-      <input type="text" className="form-control" placeholder="Last name" value={busdata.fromPlace} name='fromPlace' onChange={update} />
-    </div>
-  </div>
-  <div className="row mb-3">
-    <div className="col">
-      <input type="text" className="form-control" placeholder="First name" value={busdata.toPlace} name='toPlace' onChange={update} />
-    </div>
-    <div className="col">
-      <input type="text" className="form-control" placeholder="Last name" value={busdata.userName} name='userName' onChange={update} />
-    </div>
-  </div>
+    <Modal
+     show={toggle}
+     onHide={handleColse}
+     backdrop="static"
+     keyboard={false}
+   >
+     <Modal.Header closeButton>
+       <Modal.Title>Modal title</Modal.Title>
+     </Modal.Header >
+     <Modal.Body>
+     <Form>
+         <Row>
+           <Col>
+             <Form.Control
+               placeholder="bus Name"
+               name="busName"
+               value={busdata.busName}
+               onChange={update}
+             />
+           </Col>
+           <Col>
+             <Form.Control
+               placeholder="busFeature"
+               name="busFeature"
+               value={busdata.busFeature}
+               onChange={update}
+             />
+           </Col>
+         </Row>
+         <br />
+         <Row>
+           <Col>
+             <Form.Control
+               placeholder="busFacility"
+               name="busFacility"
+               value={busdata.busFacility}
+               onChange={update}
+             />
+           </Col>
+           <Col>
+             <Form.Control
+               placeholder="fromPlace"
+               name="fromPlace"
+               value={busdata.fromPlace}
+               onChange={update}
+             />
+           </Col>
+         </Row>
+         <br />
+         <Row>
+           <Col>
+             <Form.Control
+               placeholder=" toPlace"
+               name="toPlace"
+               value={busdata.toPlace}
+               onChange={update}
+             />
+           </Col>
 
-            ...
-          </div>
-          <div className="modal-footer">
-            <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={()=>{props.setshowedit(false)}}>Close</button>
-            <button type="button" className="btn btn-primary" onClick={()=>{saveData()}}>Save changes</button>
-          </div>
-        </div>
-      </div>
-    </div>
+           <Col>
+             <Form.Control
+               placeholder="distance"
+               name="distance"
+               value={busdata.distance}
+               onChange={update}
+             />
+           </Col>
+         </Row>
+         <br />
+         <Row>
+         <Col>
+             <Form.Control
+               placeholder="userName"
+               name="userName"
+               value={busdata.userName}
+               onChange={update}
+             />
+           </Col>
 
-</div>
+           <Col>
+             <Form.Control
+               placeholder="Showroom Price"
+               name="showroom_Price"
+               value={busdata.showroom_Price}
+               onChange={update}
+             />
+           </Col>
+         </Row>
+         <br />
+        
+         <br />
+         
+         
+       </Form>
+     </Modal.Body>
+     <Modal.Footer>
+       <Button variant="secondary" onClick={handleColse}>
+         Close
+       </Button>
+       <Button variant="primary" onClick={()=>{saveData()}}>Submit</Button>
+     </Modal.Footer>
+   </Modal>
+ </div>
   )
 }
 
