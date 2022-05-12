@@ -1,6 +1,41 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useState } from 'react'
 import {withRouter} from 'react-router-dom'
 function Search() {
+
+const [busData, setbusData] = useState({
+    
+  fromPlace: "",
+  toPlace: ""
+
+})
+
+const [searchedData, setsearchedData] = useState([])
+
+let handleChange=(e)=>{
+  setbusData({   
+     ...busData,
+    [e.target.name]:e.target.value
+  })
+}
+
+console.log("-=-=-=-=-=-=-=",busData)
+
+ let searchData=async()=>{
+
+  let res=await axios.get("http://localhost:8080/search",busData);
+  console.log("------------->",res.data)
+
+setsearchedData([res.data]);
+
+}
+
+console.log("-==--=-----=-===-=",searchedData);
+
+
+
+
+
   return (
     <div>
 
@@ -8,16 +43,16 @@ function Search() {
 
 <div class="form-group">
     <label for="exampleInputPassword1">From Place</label>
-    <input type="text" class="form-control" id="exampleInputPassword1" />
+    <input type="text" class="form-control" id="exampleInputPassword1" name='fromPlace' value={busData.fromPlace} onChange={(e) => { handleChange(e) }} />
 </div>
 
 <div class="form-group">
     <label for="exampleInputPassword1">To Place</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" />
+    <input type="text" class="form-control" id="exampleInput"  name='toPlace' value={busData.toPlace} onChange={(e) => { handleChange(e) }} />
 </div>
 
 
-<button type="submit" class="btn btn-primary">Search</button>
+<button type="submit" class="btn btn-primary" onClick={searchData}>Search</button>
 </form>
 
 

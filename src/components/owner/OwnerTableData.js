@@ -51,8 +51,28 @@ function OwnerTableData() {
     let updateData=(val)=>{
       setshowedit(true);
       setselected(val);
+      console.log(val,"rrrrrr")
     }
     
+
+  let deleteData= async(busId)=>{
+  
+    let token= localStorage.getItem("jwt")
+    let token1=JSON.parse(token)
+    let jwtToken=`Bearer ${token1}`
+
+    let res= await axios.delete(`http://localhost:8080/removebus/${busId}`,{headers:{"Authorization":jwtToken}});
+    if(res.data.err){
+      alert("somthing went wrong")
+    }else{
+      alert("deleted successfully")
+    }
+
+
+  }
+
+
+    console.log(selected,"rrrrrr")
   return (
 
 
@@ -109,15 +129,16 @@ function OwnerTableData() {
                       paddingLeft: "20px",
                     }}
                     variant="success"
+
                     onClick={()=>{updateData(val)}}
                   >
                     Edit
                   </button>
                   <button
                     variant="primary"
-                    // onClick={() => {
-                    //   deleteData(val.carId);
-                    // }}
+                    onClick={() => {
+                      deleteData(val.busId);
+                    }}
                   >
                     Delete
                   </button>

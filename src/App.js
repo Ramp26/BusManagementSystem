@@ -37,7 +37,7 @@ function App() {
   
       <Switch>
       <Route path="/reg" component={Reg}></Route>
-      <Route
+      {/* <Route
           path={"/login"}
           render={(props) => {
             return (
@@ -48,7 +48,9 @@ function App() {
               />
             );
           }}
-        />
+        /> */}
+         
+         <Route path="/login" component={Login}></Route>
           <Route path="/search" component={Search}></Route>
           <Route path="/homeowner" component={HomeOwner}></Route>
           <Route path="/ownertabledata" component={OwnerTableData}></Route>

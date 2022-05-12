@@ -5,8 +5,13 @@ import { withRouter } from 'react-router-dom'
 
 function Login(props) {
     const [loginArr, setloginArr] = useState([])
-    let loginObj = props.loginObj
-    let setLoginObj = props.setLoginObj
+    // let loginObj = props.loginObj
+    // let setLoginObj = props.setLoginObj
+    const [loginObj, setLoginObj] = useState({
+        userName:'',
+        password:''
+
+    })
     
     const [superUserError, setsuperUserError] = useState('')
     const [isUserValid, setisUserValid] = useState(false)
