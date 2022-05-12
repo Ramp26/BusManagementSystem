@@ -21,8 +21,8 @@ function Search() {
 
   console.log("-=-=-=-=-=-=-=", busData)
 
-  let searchData = async () => {
-
+  let searchData = async (e) => {
+    e.preventDefault();
     let res = await axios.get("http://localhost:8080/search", busData);
     console.log("------------->ninu", res.data)
     console.log(res, "=========>nanu");
@@ -40,7 +40,9 @@ function Search() {
   return (
     <div>
 
-      <form class="col-md-4 mb-3 m-auto mt-5" style={{ border: '1px solid blue', boxShadow: '0 5px 0 3px blue' }} >
+      <form class="col-md-4 mb-3 m-auto mt-5" style={{ border: '1px solid blue', boxShadow: '0 5px 0 3px blue' }} 
+    onsubmit={searchData}
+    >
 
         <div class="form-group">
           <label for="exampleInputPassword1">From Place</label>
@@ -53,7 +55,7 @@ function Search() {
         </div>
 
 
-        <button type="submit" class="btn btn-primary" onClick={searchData}>Search</button>
+        <button type="submit" class="btn btn-primary" >Search</button>
       </form>
 
 
